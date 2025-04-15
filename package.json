@@ -1,0 +1,17 @@
+{
+  "name": "backend-iii---entrega",
+  "version": "1.0.0",
+  "description": "Adoptpet",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "author": "Omar Roselli",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^9.7.0",
+    "dotenv": "^16.5.0",
+    "express-compression": "^1.0.2"
+  }
+}
