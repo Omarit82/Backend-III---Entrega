@@ -1,10 +1,12 @@
-import express from 'express'
+import express from 'express';
+import dotenv from 'dotenv';
 import compression from 'express-compression';
-import userRouter from "./routes/users.routes.js"
-import mocksRouter from "./routes/mocks.routes.js"
+import userRouter from "./routes/users.routes.js";
+import mocksRouter from "./routes/mocks.routes.js";
+import mongoose from 'mongoose';
 
+dotenv.config();
 const app = express();
-const PORT = 8080;
 
 app.use(express.json());
 
@@ -19,6 +21,13 @@ app.get('/',(req,res)=>{
     res.status(200).json({message:'connected'})
 })
 
-app.listen(PORT,()=>{
-    console.log(`Server running on port: ${PORT}`)
+mongoose.connect(process.env.MONGO_URL)
+.then(()=>{
+    console.log("DB connected");
+}).catch(() => {
+    console.log("DB Connection error!");
+})
+
+app.listen(process.env.PORT,()=>{
+    console.log(`Server running on port: ${process.env.PORT}`)
 })

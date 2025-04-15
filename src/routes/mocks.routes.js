@@ -13,12 +13,9 @@ mocksRouter.get('/mockingpets', async(req,res)=>{
 })
 
 mocksRouter.get('/mockingusers', async(req,res)=>{
-    let users =[];
-        for (let i=0; i<50 ; i++){
-            users.push(generateUser())
-        }
-        console.log(users);
-        res.status(200).json({"Users: ":users})
+    const users = generateUser(process.env.MOCKUSERS);
+    console.log(users);
+    res.status(200).json({"Users: ":users})
 })
 
 
