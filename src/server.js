@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import compression from 'express-compression';
-import userRouter from "./routes/users.routes.js";
 import mocksRouter from "./routes/mocks.routes.js";
 import mongoose from 'mongoose';
 
@@ -14,7 +13,6 @@ app.use(compression({
     brotli:{enabled:true, zlib:{}}
 }))
 
-app.use('/api/users',userRouter);
 app.use('/api/mocks', mocksRouter)
 
 app.get('/',(req,res)=>{

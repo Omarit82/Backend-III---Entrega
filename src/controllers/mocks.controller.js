@@ -1,4 +1,6 @@
 import { generatePet,generateUser } from "../utils/faker.js";
+import userModel from "../models/users.model.js";
+import petModel from "../models/pets.model.js";
 
 export const genPets = async(req,res)=>{
     let pets = [];
@@ -19,8 +21,15 @@ export const insertRegisters = async(req,res)=>{
     try {
         const qtyPets = req.params.pets;
         const qtyUsers = req.params.users;
+        for (let i=0; i<qtyUsers ; i++){
+            const user = generateUser(1);
+            const newUser = await userModel.create(user);
+            res.status(201).send({message:"User created",user:newUser})
+        }
         for (let i=0; i<qtyPets ; i++){
-            
+            const pet = generatePet(1);
+            const newPet = await petModel.create(pet);
+            res.status(201).send({message:"Pet created",pet:newPet})
         }
     } catch (error) {
         console.log(error)
