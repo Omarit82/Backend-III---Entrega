@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 dotenv.config();
 const app = express();
-
+const PORT = process.env.PORT;
 app.use(express.json());
 
 app.use(compression({
@@ -26,6 +26,6 @@ mongoose.connect(process.env.MONGO_URL)
     console.log("DB Connection error!");
 })
 
-app.listen(process.env.PORT,()=>{
-    console.log(`Server running on port: ${process.env.PORT}`)
+app.listen(PORT,()=>{
+    console.log(`Server running on port: ${PORT}`)
 })
