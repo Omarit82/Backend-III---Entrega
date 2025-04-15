@@ -1,4 +1,6 @@
 import { fakerDE } from '@faker-js/faker';
+import { encriptar } from './bcrypt.js';
+
 
 export const generatePet = () => {
     return{
@@ -10,7 +12,7 @@ export const generatePet = () => {
 
 export const generateUser = () =>{
     //email, _id, nombre, apellido, fecha_nacimiento, genero,celular, imagen
-    
+    const pets = [];
     return {
         _id: fakerDE.database.mongodbObjectId(),
         first_name: fakerDE.person.firstName(),
@@ -20,6 +22,8 @@ export const generateUser = () =>{
         address: fakerDE.location.streetAddress(),
         img: fakerDE.image.avatar(),
         email: fakerDE.internet.email(),
-        password: fakerDE.internet.password(),
+        role: "user",
+        password: encriptar('coder123'),
+        pets: pets
     }
 }
