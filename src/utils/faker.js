@@ -10,7 +10,7 @@ export const generatePet = () => {
         specie: fakerDE.animal.type(),
         birthDate: fakerDE.date.birthdate(),
         adopted: fakerDE.datatype.boolean(),
-        owner: fakerDE.person.lastName(),
+        owner: generateUser(1)[0],
         image: fakerDE.image.avatar()
     }
 }
