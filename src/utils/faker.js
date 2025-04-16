@@ -1,5 +1,5 @@
 import { fakerDE } from '@faker-js/faker';
-import { createHash } from './index.js';
+import { encriptar } from './bcrypt.js';
 
 
 
@@ -27,7 +27,7 @@ export const generateUser = (quantity) =>{
             img: fakerDE.image.avatar(),
             email: fakerDE.internet.email(),
             role: roles[Math.floor(Math.random()* roles.length)],
-            password: createHash('coder123'),
+            password: encriptar('coder123'),
             pets: pets
         }
         users.push(user);
