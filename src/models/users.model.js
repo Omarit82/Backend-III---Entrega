@@ -15,7 +15,7 @@ const userSchema = new Schema({
             required: true
         },
         phone: {
-            type:Number,
+            type:String,
             required: true
         },
         address: {
@@ -39,10 +39,7 @@ const userSchema = new Schema({
             type:String,
             required: true
         },
-        pets: {
-            type:Schema.Types.ObjectId,
-            ref: "pets"
-        }
+        pets:[]
 })
 
 const userModel = model('users',userSchema);
