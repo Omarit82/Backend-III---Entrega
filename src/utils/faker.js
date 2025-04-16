@@ -7,7 +7,11 @@ export const generatePet = () => {
     return{
         _id: fakerDE.database.mongodbObjectId(),
         name: fakerDE.animal.petName(),
-        type: fakerDE.animal.type()
+        specie: fakerDE.animal.type(),
+        birthDate: fakerDE.date.birthdate(),
+        adopted: fakerDE.datatype.boolean(),
+        owner: fakerDE.person.lastName(),
+        image: fakerDE.image.avatar()
     }
 }
 
@@ -21,13 +25,9 @@ export const generateUser = (quantity) =>{
             _id: fakerDE.database.mongodbObjectId(),
             first_name: fakerDE.person.firstName(),
             last_name: fakerDE.person.lastName(),
-            birth_date: fakerDE.date.birthdate(),
-            phone: fakerDE.phone.number(),
-            address: fakerDE.location.streetAddress(),
-            img: fakerDE.image.avatar(),
             email: fakerDE.internet.email(),
-            role: roles[Math.floor(Math.random()* roles.length)],
             password: encriptar('coder123'),
+            role: roles[Math.floor(Math.random()* roles.length)],
             pets: pets
         }
         users.push(user);
