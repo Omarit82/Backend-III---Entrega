@@ -1,6 +1,7 @@
+import petModel from "../dao/models/Pet.js";
+import userModel from "../dao/models/User.js";
 import { generatePet,generateUser } from "../utils/faker.js";
-import userModel from "../models/users.model.js";
-import petModel from "../models/pets.model.js";
+
 
 
 export const genPets = async(req,res)=>{
