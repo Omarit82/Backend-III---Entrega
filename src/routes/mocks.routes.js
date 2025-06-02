@@ -3,7 +3,7 @@ import { genPets, genUsers, insertRegisters } from "../controllers/mocks.control
 
 const mocksRouter = Router();
 
-mocksRouter.get('/mockingpets', genPets);
+mocksRouter.get('/mockingpets/:numPets', genPets);
 mocksRouter.get('/mockingusers', genUsers)
 mocksRouter.post('/generatedata/:users/:pets',insertRegisters)
 
