@@ -1,15 +1,44 @@
+import EError from "../services/Error/EError.js";
+import CustomError from "../services/Error/CustomError.js";
+import { generateAdoptionGettingError } from "../services/Error/info.js";
 import { adoptionsService, petsService, usersService } from "../services/index.js"
 
 const getAllAdoptions = async(req,res)=>{
-    const result = await adoptionsService.getAll();
-    res.send({status:"success",payload:result})
+    try {
+        const result = await adoptionsService.getAll();
+        if(!result){
+            CustomError.NewError({
+                name:"Error adquiring adoptions",
+                cause:generateAdoptionGettingError(),
+                message:"Error adquiring adoptions",
+                code: EError.DATABASE_ERROR
+            })
+        }
+        res.status(200).send({status:"success",payload:result}) 
+    } catch (error) {
+        res.status(500).send(err)
+    }   
 }
 
 const getAdoption = async(req,res)=>{
-    const adoptionId = req.params.aid;
-    const adoption = await adoptionsService.getBy({_id:adoptionId})
-    if(!adoption) return res.status(404).send({status:"error",error:"Adoption not found"})
-    res.send({status:"success",payload:adoption})
+    try {
+        const adoptionId = req.params.aid;
+        const adoption = await adoptionsService.getBy({_id:adoptionId})
+        console.log(adoption);
+        if(!adoption) {
+            CustomError.NewError({
+                name:"Error adquiring adoptions",
+                cause:generateAdoptionGettingError(),
+                message:"Error adquiring adoptions",
+                code: EError.DATABASE_ERROR
+            })
+        }
+        res.status(200).send({status:"success",payload:adoption})
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({error:error})
+    }
+   
 }
 
 const createAdoption = async(req,res)=>{
