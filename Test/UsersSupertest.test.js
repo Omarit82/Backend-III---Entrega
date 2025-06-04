@@ -32,19 +32,27 @@ describe('User API', () => {
     })
 
     it("Get User by ID.", async() =>{
-        const user = await userModel.findOne({email:email});
-        expect(user.email).to.equal(email); //Verificacion del correo.
+        const res = await request(server)
+        .get(`/api/users/${userID}`)
+        expect(res.status).to.equals(200);
+        expect(res.body.payload.user._id).to.equal(userID);
     })
-    it("Update User", async () =>{
-        const userUpdate = await userModel.findOneAndUpdate(
-            {email:email},
-            {$set: {first_name:"Other"}},
-            {new:true}
-        )
-        expect(userUpdate.first_name).to.equal("Other")
+
+    it("Update User by Id", async () =>{
+        const res = await request(server)
+        .put(`/api/users/${userID}`)
+        .send({
+            first_name:"OtherName",
+            last_name:"OtherLastName"
+        })
+        expect(res.status).to.equals(200);
+        expect(res.body.message).to.equal("User updated");
     })
-    it("Delete User",async () =>{
-        const userDeleted = await userModel.findOneAndDelete({email:email});
-        expect(userDeleted.email).to.equal(email);
+
+    it("Delete User by Id",async () =>{
+        const res = await request(server)
+        .delete(`/api/users/${userID}`)
+        expect(res.status).to.equals(200);
+        expect(res.body.message).to.equal("User deleted");
     })
 })
