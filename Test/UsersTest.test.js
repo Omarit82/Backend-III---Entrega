@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import assert from 'assert';
 import userModel from "../src/dao/models/User.js";
+import dotenv from'dotenv';
 
 describe('User Test', () => {
     let email ="";
+    dotenv.config();
     before (async () => {
-        await mongoose.connect('mongodb+srv://roselliomar82:piperpa11@unidad2.fpojkty.mongodb.net/?retryWrites=true&w=majority&appName=Unidad2')
+        await mongoose.connect(process.env.MONGO_URL)
     });
     it("Create User",async ()=>{
         const user = {

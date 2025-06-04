@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "node --watch src/app.js",
-    "test": "mocha test/supertest.test.js",
+    "superTest": "mocha test/UsersSupertest.test.js",
     "testChai":"mocha test/UserTestChai.test.js",
     "testMocha": "mocha Test/UsersTest.test.js"
   },
