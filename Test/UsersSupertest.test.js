@@ -21,7 +21,7 @@ describe('User API', () => {
     })
 
     it("Registrar nuevo user",async ()=>{
-        const res = await request(server).POST('/api/sessions/reguster').send({
+        const res = await request(server).post('/api/sessions/reguster').send({
             first_name:"John",
             last_name:"Doe",
             email:`johndoe${crypto.randomUUID().toString('hex')}@email.com`,
