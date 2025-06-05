@@ -9,33 +9,47 @@ describe('User API', () => {
     dotenv.config();
     let userID;
     let server;
-    before (async () => {
-        await mongoose.connect(process.env.MONGO_URL);
-        server = app.listen(8080)
+    let port;
+    before(async() => {
+        mongoose.connect(process.env.MONGO_URL);
+        await new Promise (resolve => {
+            server = app.listen(0, ()=>{
+                port = server.address().port;
+                console.log(`Test server started on port: ${port}`);
+                resolve();
+            })
+        })
     });
     
     after(async () => {
         await userModel.deleteMany({});
         await mongoose.connection.close();
-        server.close()
-    })
+        await new Promise(resolve => {
+            server.close(()=>{
+                console.log("Test server closed");
+                resolve();
+            });
+        });
+    });
 
     it("Registrar nuevo user",async ()=>{
-        const res = await request(server).post('/api/sessions/reguster').send({
+        const response = await request(server)
+            .post('/api/sessions/register')
+            .send({
             first_name:"John",
             last_name:"Doe",
             email:`johndoe${crypto.randomUUID().toString('hex')}@email.com`,
             password:"1234567"
         })
-        expect(res.status).to.equal(201);
-        userID = res.body.payload._id
-    })
+        expect(response.status).to.equal(201);
+        userID = response.body.payload._id;
+    });
 
     it("Get User by ID.", async() =>{
         const res = await request(server)
         .get(`/api/users/${userID}`)
         expect(res.status).to.equals(200);
-        expect(res.body.payload.user._id).to.equal(userID);
+        expect(res.body.payload._id).to.equal(userID);
     })
 
     it("Update User by Id", async () =>{

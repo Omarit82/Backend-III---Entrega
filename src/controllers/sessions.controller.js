@@ -1,26 +1,28 @@
 import { usersService } from "../services/index.js";
 import { createHash, passwordValidation } from "../utils/index.js";
+import { encriptar,desencriptar } from "../utils/bcrypt.js";
 import jwt from 'jsonwebtoken';
 import UserDTO from '../dto/User.dto.js';
 
 const register = async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body;
-        if (!first_name || !last_name || !email || !password) return res.status(400).send({ status: "error", error: "Incomplete values" });
+        if (!first_name || !last_name || !email || !password){
+             return res.status(400).send({ status: "error", error: "Incomplete values" });
+        }
         const exists = await usersService.getUserByEmail(email);
         if (exists) return res.status(400).send({ status: "error", error: "User already exists" });
-        const hashedPassword = await createHash(password);
+        const hashedPassword = encriptar(password);
         const user = {
-            first_name,
-            last_name,
-            email,
-            password: hashedPassword
+            first_name:first_name,
+            last_name:last_name,
+            email:email,
+            password:hashedPassword
         }
         let result = await usersService.create(user);
-        console.log(result);
-        res.status(201).send({ status: "success", payload: result._id });
+        res.status(201).send({ status: "success", payload: result });
     } catch (error) {
-
+        res.status(500).send({message:"Error en la conexion"})
     }
 }
 
