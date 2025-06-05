@@ -3,7 +3,7 @@ paths:
     get:
       summary: Obtiene todos los usuarios
       tags:
-        -users
+        - Users
       responses:
         "200":
           description: Los usuarios fueron obtenidos satisfactoriamente de la DB
