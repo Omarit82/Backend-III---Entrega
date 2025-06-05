@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import swaggerSetup from './utils/swagger.js';
 
 import indexRoutes from './routes/index.routes.js';
 
@@ -14,12 +15,13 @@ mongoose.connect(process.env.MONGO_URL)
 }).catch(()=>{
     console.log("DB Connection error!");
 })
+swaggerSetup(app);
 
 app.use(express.json());
 app.use(cookieParser());
-
 app.use('/',indexRoutes);
 
-app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
+
+app.listen(PORT,()=>console.log(`Listening on port: ${PORT}`))
 
 export default app;

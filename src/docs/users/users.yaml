@@ -1,0 +1,22 @@
+paths:
+  /api/users/:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        -users
+      responses:
+        "200":
+          description: Los usuarios fueron obtenidos satisfactoriamente de la DB
+        "500":
+          description: Error interno del servidor
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id generado por Mongo
+        first_name:
+          type: String
+          description: Nombre del usuario
