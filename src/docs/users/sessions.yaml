@@ -1,0 +1,19 @@
+paths:
+  /api/sessions/register:
+    post:
+      summary: Creates a new User
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/User'
+      responses:
+        "201":
+          description: User created successfully
+        "400":
+          description: Incomplete values
+        "500":
+          description: Server internal error

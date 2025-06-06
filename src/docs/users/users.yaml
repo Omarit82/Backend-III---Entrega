@@ -1,14 +1,76 @@
 paths:
-  /api/users/:
+  /api/users:
     get:
-      summary: Obtiene todos los usuarios
+      summary: Gets all the users
       tags:
         - Users
       responses:
         "200":
-          description: Los usuarios fueron obtenidos satisfactoriamente de la DB
+          description: Users adquired successfully from data base
         "500":
-          description: Error interno del servidor
+          description: Server internal error
+
+  /api/users/{uid}:
+    get:
+      summary: Gets the user with an uid specificated
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Serched user's id
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/User'
+      responses:
+        "200":
+          description: User found
+        "500":
+          description: Server internal Error
+    put:
+      summary: Edits user with id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Serched user's id
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/User'
+      responses:
+        "200":
+          description: User found
+        "500":
+          description: Server internal Error    
+    delete:
+      summary: Deletes user with id
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Serched user's id
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: User found
+        "500":
+          description: Server internal Error
 components:
   schemas:
     User:
@@ -16,7 +78,38 @@ components:
       properties:
         _id:
           type: ObjectId
-          description: Id generado por Mongo
+          description: Mongo's generated Id
         first_name:
           type: String
-          description: Nombre del usuario
+          description: User name
+        last_name:
+          type: String
+          description: User last name
+        email:
+          type: String
+          format: email
+          description: User email - This field is unique
+        password:
+          type: String
+          description: Hashed user's password
+        role:
+          type: String
+          description: Descrives the type of user - user or admin.
+        pets:
+          type: Array
+          description: Array that includes pets' id
+          items:
+            type: ObjectId
+            description: Pet's Id
+        required:
+          - first_name
+          - last_name
+          - email
+          - password
+      example:
+        _id: ObjectId("684221e07cf993cf9f2c4e26")
+        first_name: Omar
+        last_name: Roselli
+        email: roselliomar82@gmail.com
+        password: $2b$04$/QhIEDWlGZkIIieoSK8kCemikBiXoEWhEwNzarIB7ys8Z6oouuu2a
+ 
