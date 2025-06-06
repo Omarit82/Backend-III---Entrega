@@ -1,0 +1,106 @@
+paths:
+  /api/pets:
+    get:
+      summary: Gets all the pets
+      tags:
+        - Pets
+      responses:
+        "200":
+          description: Pets acquired successfully from database
+        "500":
+          description: Server internal error
+    post:
+      summary: Creates a new pet
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Pet'
+      responses:
+        "201":
+          description: Pet created successfully
+        "400":
+          description: Invalid pet data provided
+        "500":
+          description: Server internal error
+  /api/pets/{pid}:
+    put:
+      summary: Edits pet with id
+      tags:
+        - Pets
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Searched pet's id
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Pet'
+      responses:
+        "200":
+          description: Pet updated successfully
+        "500":
+          description: Server internal Error
+    delete:
+      summary: Deletes pet with id
+      tags:
+        - Pets
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Searched pet's id
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: Pet deleted successfully
+        "500":
+          description: Server internal Error
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Mongo's generated Id
+        name:
+          type: String
+          description: Pet's name
+        specie:
+          type: String
+          description: Pet's specie
+        birthDate:
+          type: String
+          format: date
+          description: Pet's birth date
+        adopted:
+          type: Boolean
+          description: Indicates if the pet has been adopted
+          default: false
+        owner:
+          type: ObjectId
+          description: ID of the pet's owner (references Users)
+        image:
+          type: String
+          description: URL or path to the pet's image
+      required:
+        - name
+        - specie
+      example:
+        _id: ObjectId("684221e07cf993cf9f2c4e27")
+        name: Buddy
+        specie: Dog
+        birthDate: "2022-01-15"
+        adopted: true
+        owner: ObjectId("684221e07cf993cf9f2c4e26")
+        image: "https://example.com/images/buddy.jpg"
