@@ -65,6 +65,24 @@ paths:
           description: Pet deleted successfully
         "500":
           description: Server internal Error
+  /api/pets/withimage:
+    post:
+      summary: Creates a new pet with its image
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Pet'
+      responses:
+        "201":
+          description: Pet created successfully
+        "400":
+          description: Invalid pet data provided
+        "500":
+          description: Server internal error
 components:
   schemas:
     Pet:
@@ -98,9 +116,9 @@ components:
         - specie
       example:
         _id: ObjectId("684221e07cf993cf9f2c4e27")
-        name: Buddy
+        name: Firulais
         specie: Dog
         birthDate: "2022-01-15"
         adopted: true
         owner: ObjectId("684221e07cf993cf9f2c4e26")
-        image: "https://example.com/images/buddy.jpg"
+        image: "https://example.com/images/firulais.jpg"
